@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>我的试卷</title>
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css"/>
+    <!--	elementui-->
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css"/>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/pagination.js"></script>
+    <!--	elementui-->
+    <script src="../js/plugins/elementui/index.js"></script>
+    <!--	基本增删改查-->
+    <script src="../controller/testController.js"></script>
+    <script src="../js/getParameter.js"></script>
+    <script src="/js/recorder.js"></script>
+<!--    <script type="text/javascript"-->
+<!--            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+<style>
+
+    .clearfix:before,
+    .clearfix:after{content: ' ';display: table;}
+    .clearfix:after{clear:both;}
+    .left{float: left;width: 1200px;height: 200px; }
+    .right{margin-left: 1210px;height: 200px;}
+    /*footer{width: 100%;height: 100px;background-color: #eee;}*/
+</style>
+<script>
+    $(document.body).css({
+        "overflow-x":"hidden",
+        "overflow-y":"hidden"
+    });
+</script>
+<div id="app" style="white-space: pre-wrap">
+    <!-- .box-body -->
+    <div class="box-header with-border">
+        <h3 class="box-title"><a href="paper.html">我的试卷</a>->开始考试</h3>
+    </div>
+    <header>
+        <div><h3 align="center"><strong>{{this.paperEntity.name}}-共{{this.questionList.length}}题</strong></h3></div>
+<!--        <h4 align="left" style="color: #0f321e">&nbsp;&nbsp;满分：{{this.maxScore}} &nbsp; &nbsp;-->
+        <div> </font><span id="remainDays"></span> </h4></div>
+        <hr style="background-color:#f39c12;height: 2px;"/>
+    </header>
+<!--    题目界面-->
+    <div v-if="pageIndex=='0'">
+<!--        字符串类型的题目-->
+        <div v-if="questionList[questionindex].showType=='string' ">
+<!--                <img src = "http://latex.codecogs.com/gif.latex?\sqrt{a^2+b^2}" title = "\sqrt{a^2+b^2}" />-->
+<!--                <img src = "http://latex.codecogs.com/gif.latex?$\beta \leftarrow \alpha  \circ z$\" title = "\sqrt{a^2+b^2}" />-->
+
+<!--                <img :src="`http://latex.codecogs.com/gif.latex?`+questionList[questionindex].content"><br/>-->
+<!--            <div class="box-body">-->
+<!--            <div style="white-space: pre">-->
+                <h3>{{questionindex+1}}. <font style="font-family: 'STHupo';line-height:50px">{{questionList[questionindex].content}}</font></h3>
+                 <!--<h3>{{entity.optionMap.A}}</h3>-->
+                <br />
+                <br />
+                <div align="center" v-if="questionList[questionindex].contentImage">
+                    <img :src="questionList[questionindex].contentImage"><br/>
+                </div>
+                <br />
+                <div v-if="questionList[questionindex].optionMap.A!=''">
+                    <input type="checkbox" :name="questionList[questionindex].id" value="A"><label><h4><strong>{{questionList[questionindex].optionMap.A}}</strong></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="B"><label><h4><strong>{{questionList[questionindex].optionMap.B}}</strong></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="C"><label><h4><strong>{{questionList[questionindex].optionMap.C}}</strong></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="D"><label><h4><strong>{{questionList[questionindex].optionMap.D}}</strong></h4></label><br/>
+                </div>
+<!--            </div>-->
+                <!--                <div  style="text-align:center; width:100%;height:100%;margin:0px; ">-->
+<!--                    <el-row>-->
+<!--                        <el-button  type="success"  @click="reviewQuestion()" :disabled="isdisabled">下一页</el-button>-->
+<!--    &lt;!&ndash;                    <el-button  type="success"  @click="findDept()" :disabled="isdisabled">下一页</el-button>&ndash;&gt;-->
+<!--                    </el-row>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+<!--        图片类型的题目-->
+        <div  v-else-if="questionList[questionindex].showType=='img' ">
+
+            <div align="center">
+                <img :src="questionList[questionindex].contentImage"><br/>
+            </div>
+            <br />
+            <br />
+            <div v-if="questionList[questionindex].aImage!=''">
+                <div align="center">
+                    <input type="checkbox" :name="questionList[questionindex].id" value="A"><label><h4>A.<img :src="questionList[questionindex].aImage"></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="B"><label><h4>B.<img :src="questionList[questionindex].bImage"></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="C"><label><h4>C.<img :src="questionList[questionindex].cImage"></h4></label><br/>
+                    <input type="checkbox" :name="questionList[questionindex].id" value="D"><label><h4>D.<img :src="questionList[questionindex].dImage"></h4></label><br/>
+                </div>
+            </div>
+
+        </div>
+        <footer>
+            <div  style="text-align:right; width:100%;height:100%;margin:0px; ">
+                <el-row>
+                    <el-button  type="success"  @click="reviewQuestion()">下一页</el-button>
+                    <!--                    <el-button  type="success"  @click="findDept()" :disabled="isdisabled">下一页</el-button>-->
+                </el-row>
+            </div>
+        </footer>
+<!--        </div>-->
+    </div>
+<!--    问题回顾1界面-->
+    <div v-else-if="pageIndex=='1'">
+        <ol >
+            <h3> <li  :value=1><font style="font-family: 'STHupo'">上一题的条件是什么？</font></li></h3>
+            </br>
+            <h3> <li  :value=2><font style="font-family: 'STHupo'">上一题的目标是什么？</font></li></h3>
+            </br>
+            <h3> <li  :value=3><font style="font-family: 'STHupo'">上一题的关联知识点是什么？</font></li></h3>
+            </br>
+            <!--<h3>{{entity.optionMap.A}}</h3>-->
+            <div>
+                <el-button  type="success"  @click="recorderBegin()">开始录音</el-button>
+                <el-button  type="success"  @click="recorderStop(1)">停止录音</el-button><h4>{{recordingFlag}} </h4>
+            </div>
+
+<!--            <canvas id="canvas"></canvas>-->
+<!--            <span style="padding: 0 10%;"></span>-->
+<!--            <canvas id="playChart"></canvas>-->
+
+<!--            <div> </font><span id="recording"></span> </h4></div>这是啥-->
+
+<!--            <button type="button" id="btn1-start-recording" style="display: inline" onclick="recorderBegin()">begin</button>-->
+<!--            <button type="button" id="btn1-stop-recording" style="display: inline" onclick="recorderStop()">stop</button>-->
+
+<!--            <audio src="/i/horse.ogg" controls="controls">-->
+        </ol>
+        <footer>
+            <div  style="text-align:right; width:100%;height:100%;margin:0px; ">
+                <el-row>
+                    <el-button  type="success"  @click="nextPage(1)" :disabled="nextPageDisable">下一页</el-button>
+                </el-row>
+            </div>
+        </footer>
+    </div>
+    <!--    问题回顾2界面-->
+    <div v-else-if="pageIndex=='2'">
+        <div class="clearfix">
+            <div class="left">
+<!--                        字符串类型的题目-->
+                <div v-if="questionList[questionindex].showType=='string' ">
+                    <h3>{{questionindex+1}}. <font style="font-family: 'STHupo';line-height:50px">{{questionList[questionindex].content}}</font></h3>
+                    <br />
+                    <br />
+                    <div align="left" v-if="questionList[questionindex].contentImage">
+                        <img :src="questionList[questionindex].contentImage"><br/>
+                    </div>
+                    <br />
+                    <label><h4><strong>{{questionList[questionindex].optionMap.A}}</strong></h4></label><br/>
+                    <label><h4><strong>{{questionList[questionindex].optionMap.B}}</strong></h4></label><br/>
+                    <label><h4><strong>{{questionList[questionindex].optionMap.C}}</strong></h4></label><br/>
+                    <label><h4><strong>{{questionList[questionindex].optionMap.D}}</strong></h4></label><br/>
+                </div>
+                <!--        图片类型的题目-->
+                <div  v-else-if="questionList[questionindex].showType=='img' ">
+
+                    <div align="center">
+                        <img :src="questionList[questionindex].contentImage"><br/>
+                    </div>
+                    <br />
+                    <br />
+                    <div align="center">
+                        <label><h4>A.<img :src="questionList[questionindex].aImage"></h4></label><br/>
+                        <label><h4>B.<img :src="questionList[questionindex].bImage"></h4></label><br/>
+                        <label><h4>C.<img :src="questionList[questionindex].cImage"></h4></label><br/>
+                        <label><h4>D.<img :src="questionList[questionindex].dImage"></h4></label><br/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="right">
+                <ol >
+                    <h3> 请再次回答</h3>
+                    <h3> <li  :value=1><font style="font-family: 'STHupo'">上一题的条件是什么？</font></li></h3>
+                    </br>
+                    <h3> <li  :value=2><font style="font-family: 'STHupo'">上一题的目标是什么？</font></li></h3>
+                    </br>
+                    <h3> <li  :value=3><font style="font-family: 'STHupo'">上一题的关联知识点是什么？</font></li></h3>
+                    </br>
+                    <!--<h3>{{entity.optionMap.A}}</h3>-->
+                    <div>
+                        <el-button  type="success"  @click="recorderBegin2()" :disabled="isdisabled">开始录音</el-button>
+                        <el-button  type="success"  @click="recorderStop2(2)" :disabled="isdisabled">停止录音</el-button><h4>{{recordingFlag2}} </h4>
+                    </div>
+                </ol>
+                <footer>
+                    <div  style="text-align:right; width:100%;height:100%;margin:0px; ">
+                        <el-row>
+                            <el-button  type="success"  @click="nextPage(2)" :disabled="nextPageDisable2">下一页</el-button>
+                        </el-row>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <!--    问卷界面-->
+    <div v-else-if="pageIndex=='3'">
+        <h3> <li  :value=1><font style="font-family: 'STHupo'">回答该题目(物理/生物等学科的题目)的信心？从1到5，1表示毫无信心,5表示非常自信</font></li></h3>
+        <label><input name="Confidence" type="radio" value="" />1 </label>
+        <label><input name="Confidence" type="radio" value="" />2 </label>
+        <label><input name="Confidence" type="radio" value="" />3 </label>
+        <label><input name="Confidence" type="radio" value="" />4 </label>
+        <label><input name="Confidence" type="radio" value="" />5 </label>
+        </br>
+        <h3> <li  :value=2><font style="font-family: 'STHupo'">回答该题目的情绪？从1到5，1表示非常紧张,5表示非常平静</font></li></h3>
+        <label><input name="emotion" type="radio" value="" />1 </label>
+        <label><input name="emotion" type="radio" value="" />2 </label>
+        <label><input name="emotion" type="radio" value="" />3 </label>
+        <label><input name="emotion" type="radio" value="" />4 </label>
+        <label><input name="emotion" type="radio" value="" />5 </label>
+        </br>
+        <h3> <li  :value=3><font style="font-family: 'STHupo'">题目对您来说难易程度如何？从1到5，1表示很难,5表示非常简单</font></li></h3>
+        <label><input name="easy" type="radio" value="" />1 </label>
+        <label><input name="easy" type="radio" value="" />2 </label>
+        <label><input name="easy" type="radio" value="" />3 </label>
+        <label><input name="easy" type="radio" value="" />4 </label>
+        <label><input name="easy" type="radio" value="" />5 </label>
+        </br>
+        <footer>
+            <div  style="text-align:right; width:100%;height:100%;margin:0px; ">
+                <el-row>
+                    <el-button  type="success"  @click="submitAQuestionAnswer()" :disabled="isdisabled">下一页</el-button>
+                </el-row>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

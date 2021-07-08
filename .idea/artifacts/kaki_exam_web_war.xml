@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="kaki-exam-web:war">
+    <output-path>$PROJECT_DIR$/kaki-exam-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>kaki-exam-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="kaki-exam-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="kaki-exam-web:war exploded" />
+    </root>
+  </artifact>
+</component>

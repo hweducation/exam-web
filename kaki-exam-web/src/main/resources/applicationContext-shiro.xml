@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 1. 配置Shiro的过滤器工厂(拦截所有的请求URL) -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 1.1 设置安全管理器(身份认证与授权) -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 1.2 登录请求URL(重定向) -->
+        <property name="loginUrl" value="/login.html"/>
+        <!--
+            1.3 配置过滤器链(配置顺序为自上而下)
+            1. user: 过滤器只要用户登录(isRemembered()==true or isAuthenticated()==true)即可访问成功
+            2. authc: 过滤器只要用户登录isAuthenticated()==true即可访问成功
+            3. anon : 匿名访问，不需要登录
+            4. logout : 安全退出
+        -->
+        <property name="filterChainDefinitions">
+            <value>
+                /css/** = anon
+                /img/** = anon
+                /js/** = anon
+                /plugins/** = anon
+                /*.html = anon
+
+                /examuser/save = anon
+                /seller/save = anon
+                /dept/findAll = anon
+
+
+                /web/loginweb = anon
+                /logout = logout
+
+                /** = user
+            </value>
+        </property>
+
+    </bean>
+
+    <!-- 2. 配置安全管理器(身份认证与授权) -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 设置认证域 -->
+        <property name="realm" ref="authorizingRealm"/>
+    </bean>
+
+    <!-- 3. 配置自定义的认证域(用户名与密码来自数据库表) -->
+    <bean id="authorizingRealm" class="com.icbc.realm.ExamUserAuthorizingRealm">
+        <!-- 设置密码凭证匹配器 -->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+    <!-- 配置密码凭证匹配器 -->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 设置加密算法名称 -->
+        <property name="hashAlgorithmName" value="md5"/>
+        <!-- 设置加密迭代次数 -->
+        <property name="hashIterations" value="5"/>
+        <!-- 设置存储密码仪凭证采用十六进制编码的字符串 -->
+        <property name="storedCredentialsHexEncoded" value="true"/>
+    </bean>
+
+</beans>

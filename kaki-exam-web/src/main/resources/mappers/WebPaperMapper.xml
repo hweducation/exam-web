@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icbc.mapper.WebPaperMapper">
+
+<!--   条件分页查询商品表查询-->
+	<select id="findAll" parameterType="com.icbc.pojo.Paper" resultType="com.icbc.pojo.Paper">
+		select
+			t1.`id`,
+			t1.`name`,
+			t1.`status`,
+			t1.`score`,
+			t2.`dept_name`as deptName,
+			t1.`dept_flag` as deptFlag,
+			t1.`time`
+		from
+			   `t_exam_paper` t1,`t_exam_dept` t2
+		where
+			  t1.`dept_flag` = t2.`id`
+		and
+			  t1.dept_flag = (select dept_flag from `t_exam_user` where username=#{username,jdbcType=VARCHAR} )
+		and
+			  t1.`status` =0
+		order by t1.id
+	</select>
+
+
+	<select id="findByPaperId" resultType="com.icbc.pojo.Question" parameterType="java.lang.Integer">
+		select
+		  `id`,
+		  `content`,
+		  `answer`,
+		  `score`,
+		  `type`,
+		  `option_map_string`,
+		  `reason`,
+		  `content_image`,
+		  `A_image`,
+		  `B_image`,
+		  `C_image`,
+		  `D_image`,
+		  `show_type`
+		from
+		  `t_exam_question`
+		where id in
+		  (select
+			qid
+		  from
+			`t_exam_paper_question`
+		  where pid = #{value})
+		order by id
+	</select>
+
+</mapper>

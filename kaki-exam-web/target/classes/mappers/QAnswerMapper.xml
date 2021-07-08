@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icbc.mapper.QAnswerMapper">
+    <insert id="save" parameterType="QAnswer">
+        insert into `kaki_exam`.`t_exam_q_answer` (
+            `pid`,
+            `qid`,
+            `uid`,
+            `answer`,
+            `review1_1`,
+            `review1_2`,
+            `review1_3`,
+            `review2_1`,
+            `review2_2`,
+            `review2_3`,
+            `start_time`,
+            `end_time`,
+            `l1`,
+            `l2`,
+            `l3`
+        )
+        values
+        (
+            #{pid} ,
+            #{qid} ,
+            #{uid} ,
+            #{answer} ,
+            #{review1_1} ,
+            #{review1_2} ,
+            #{review1_3} ,
+            #{review2_1} ,
+            #{review2_2} ,
+            #{review2_3} ,
+            #{startTime},
+            #{endTime},
+            #{l1},
+            #{l2},
+            #{l3}
+        ) ;
+    </insert>
+</mapper>
+    

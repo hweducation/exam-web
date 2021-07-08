@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>卷纸录入</title>
+	<link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css"/>
+<!--	elementui-->
+	<link rel="stylesheet" href="../js/plugins/elementui/index.css">
+	<link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css"/>
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/axios.min.js"></script>
+	<script src="../js/pagination.js"></script>
+<!--	elementui-->
+	<script src="../js/plugins/elementui/index.js"></script>
+<!--	基本增删改查-->
+	<script src="../controller/paperController.js"></script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+	<div id="app">
+		<!-- .box-body -->
+		<div class="box-header with-border">
+			<h3 class="box-title">卷纸录入</h3>
+		</div>
+
+		<div class="box-body">
+			<!-- 数据表格 -->
+			<div class="table-box">
+				<!--工具栏-->
+				<div class="pull-left">
+					<div class="form-group form-inline">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" @click="entity = {}" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+						<!--	<button type="button" class="btn btn-default" title="删除" @click="del()" ><i class="fa fa-trash-o"></i> 删除</button>
+							--><button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+						</div>
+					</div>
+				</div>
+				<div class="box-tools pull-right">
+					<div class="has-feedback">
+						<!--  查询条件区-->
+						<table>
+							<tr>
+								<td><input class="form-control" v-model="searchEntity.name" placeholder="卷纸名称">
+								</td>
+
+								<td>
+									<select class="form-control" v-model="searchEntity.deptFlag">
+										<option value=''>===请选择===</option>
+										<option :value="b.id" v-for="b in deptList">{{b.deptName}}</option>
+									</select>
+								</td>
+
+								<td>
+									<button type="button" class="btn btn-default" @click="findPage(1)">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询
+									</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div><br/>
+				<!--工具栏/-->
+
+				<!--数据列表-->
+				<table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+					<thead>
+						<tr>
+							<th class="" style="padding-right:0px">
+								<input id="selall" type="checkbox"
+									   @click="checkAll($event)"
+									   :checked="checked"
+									   class="icheckbox_square-blue">
+							</th> 
+							<th class="sorting_asc">卷纸ID</th>
+							<th class="sorting_asc">卷纸名称</th>
+							<th class="sorting">分数</th>
+							<th class="sorting">所属部门</th>
+							<th class="sorting">答题时间（分钟）</th>
+							<th class="sorting">状态</th>
+							<th class="text-center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  v-for="entity in dataList">
+							<td><input  type="checkbox" :value="entity.id" v-model="ids"></td>
+							<td>{{entity.id}}</td>
+							<td>{{entity.name}}</td>
+							<td>{{entity.score}}</td>
+							<td>{{entity.deptName}}</td>
+							<td>{{entity.time}}</td>
+							<td>{{entity.status==0?'启用':'禁用'}}</td>
+							<td class="text-center">
+								<button type="button" class="btn bg-olive btn-xs" data-toggle="modal" @click="show(entity)" data-target="#editModal"  >修改</button>
+								<button type="button" class="btn bg-olive btn-xs" data-toggle="modal" @click="showQuestion(1,entity);temp()" data-target="#addModal"  >添加题目</button>
+							</td>
+						</tr>
+					</tbody>
+				 </table>
+				<!--分页主件-->
+				<pagination :pages="pagetotal"
+							:current="curPage"
+							@navpage="findPage"/>
+				 <!--数据列表/-->                        
+			</div>
+			<!-- 数据表格 /-->
+		 </div>
+		 <!-- /.box-body -->
+		   
+		<!-- 编辑窗口 -->
+		<div class="modal fade" id="editModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		  <div class="modal-dialog" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">卷纸编辑</h3>
+				</div>
+				<div class="modal-body">		
+					<table class="table table-bordered table-striped"  width="800px">
+						<tr>
+							<td>卷纸名称</td>
+							<td><input  class="form-control" placeholder="卷纸名称" v-model="entity.name" prop="type">  </td>
+						</tr>		      	
+						<tr>
+							<td>分数</td>
+							<td><input  class="form-control" placeholder="分数" v-model="entity.score" prop="type">  </td>
+
+						</tr>
+						<tr>
+							<td>所属部门</td>
+							<td>
+								<select class="form-control" v-model="entity.deptFlag">
+									<option value=''>===请选择===</option>
+									<option :value="b.id" v-for="b in deptList">{{b.deptName}}</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>答题时间</td>
+							<td><input  class="form-control" placeholder="答题时间" v-model="entity.time" prop="score">  </td>
+						</tr>
+						<tr>
+							<td>状态（0-启用,1-禁用）</td>
+							<td><input  class="form-control" placeholder="状态" v-model="entity.status" prop="score">  </td>
+						</tr>
+					 </table>				
+				</div>
+				<div class="modal-footer">						
+					<button class="btn btn-success" data-dismiss="modal" @click="seveOrUpdate()" aria-hidden="true">保存</button>
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			  </div>
+			</div>
+		</div>
+
+		<!-- 添加题目窗口 -->
+		<div class="modal fade"  id="addModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+			<div class="modal-dialog modal-lg" >
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel1">添加题目</h3>
+					</div>
+					<div class="modal-body">
+
+						<div class="box-body">
+							<!-- 数据表格 -->
+							<div class="table-box">
+
+								<div class="box-tools pull-left">
+									<div class="has-feedback">
+										<!--  查询条件区-->
+										<table>
+											<tr>
+												<td><input class="form-control" v-model="searchEntity.type" placeholder="题目类型">
+												</td>
+												<td><input class="form-control" v-model="searchEntity.content" placeholder="题目内容">
+												</td>
+												<td>
+													<button type="button" class="btn btn-default" @click="showQuestion(1,null)">
+														<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询
+													</button>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<br/>
+								<br/>
+								<br/>
+
+								<!--数据列表-->
+								<table id="questiondataList" class="table table-bordered table-striped table-hover dataTable">
+									<thead>
+									<tr>
+										<th class="" style="padding-right:0px">
+											<input id="selallone" type="checkbox"
+												   @click="addcheckAll($event)"
+												   :checked="addchecked"
+												   class="icheckbox_square-blue">
+										</th>
+										<th class="sorting_asc">题目ID</th>
+										<th class="sorting_asc">题目类型</th>
+										<th class="sorting">题目内容</th>
+										<th class="sorting">答案</th>
+										<th class="sorting">分数</th>
+
+									</tr>
+									</thead>
+									<tbody>
+									<tr  v-for="entity in adddataList">
+										<td><input  type="checkbox" :value="entity.id" v-model="addids"></td>
+										<td>{{entity.id}}</td>
+										<td>{{entity.type}}</td>
+										<td>{{entity.content}}</td>
+										<td>{{entity.answer}}</td>
+										<td>{{entity.score}}</td>
+
+									</tr>
+									</tbody>
+								</table>
+								<!--分页主件-->
+								<pagination :pages="addpagetotal"
+											:current="addcurPage"
+											@navpage="showQuestion"/>
+								<!--数据列表/-->
+							</div>
+							<!-- 数据表格 /-->
+						</div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-success" data-dismiss="modal" @click="addseveOrUpdate(entity)" aria-hidden="true">保存</button>
+						<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

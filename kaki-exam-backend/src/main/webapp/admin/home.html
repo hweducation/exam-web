@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="/plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="../plugins/echarts/echarts.js"></script>
+
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+   <!-- 内容区域 -->
+	<div id="app">
+
+            <!-- 内容头部 -->
+            <section class="content-header">
+                <h1>
+                    控制面板
+                    <small>首页</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+                </ol>
+            </section>
+            <!-- 内容头部 /-->
+
+            <!-- 正文区域 -->
+            <section class="content">
+
+
+                <!-- 统计数值 -->
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>150</h3>
+
+                                <p>新订单</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="all-order-manage-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                                <p>转化率</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>44</h3>
+
+                                <p>新注册用户</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="all-member-manage-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-red">
+                            <div class="inner">
+                                <h3>65</h3>
+
+                                <p>日PV</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- 正文区域 /-->
+        <div class="app-container">
+            <div class="box">
+                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                <div id="chart1" style="height:600px;"></div>
+            </div>
+        </div>
+        <!-- 内容区域 /-->
+	</div>
+
+   <script type="text/javascript">
+       // 基于准备好的dom，初始化echarts实例
+       var myChart1 = echarts.init(document.getElementById('chart1'));
+
+       // 使用刚指定的配置项和数据显示图表。
+       //myChart.setOption(option);
+
+
+
+           myChart1.setOption(
+               {
+                   title: {
+                       text: '每月注册会员数量'
+                   },
+                   tooltip: {},
+                   legend: {
+                       data: ['每月注册会员数量']
+                   },
+                   xAxis: {
+                       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                   },
+                   yAxis: {
+                       type: 'value'
+                   },
+                   series: [{
+                       name: '每月注册会员数量',
+                       type: 'line',
+                       data: [820, 932, 901, 934, 1290, 1330, 1320],
+
+                       itemStyle : {
+                           normal : {
+                               color : 'rgb(31,187,198)',
+                               borderColor : 'rgb(31,187,198)',
+                               borderWidth : 5
+
+                           }
+                       },
+
+
+                       areaStyle : {
+                           normal : {
+                               color : new echarts.graphic.LinearGradient(0,0,0,1,[
+                                   {
+                                       offset : 0,
+                                       color : 'rgba(0, 136, 212, 0.3)'
+                                   },
+                                   {
+                                       offset : 0.8,
+                                       color : 'rgba(0, 136, 212, 0)'
+                                   } ], false),
+                               shadowColor : 'rgba(0, 0, 0, 0.1)',
+                               shadowBlur : 10
+                           }
+                       }
+
+
+
+
+                   }]
+               });
+
+
+   </script>
+</body>
+
+</html>

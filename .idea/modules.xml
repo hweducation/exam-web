@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/kaki-exam-backend/kaki-exam-backend.iml" filepath="$PROJECT_DIR$/kaki-exam-backend/kaki-exam-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kaki-exam-mobile/kaki-exam-mobile.iml" filepath="$PROJECT_DIR$/kaki-exam-mobile/kaki-exam-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kaki-exam-parent.iml" filepath="$PROJECT_DIR$/kaki-exam-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kaki-exam-web/kaki-exam-web.iml" filepath="$PROJECT_DIR$/kaki-exam-web/kaki-exam-web.iml" />
+    </modules>
+  </component>
+</project>

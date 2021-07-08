@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>参天大树考试系统后台</title>
+		<link rel="icon" href="/img/temp/favicon.ico"/>
+	    <link rel="stylesheet" type="text/css" href="/css/webbase.css"/>
+	    <link rel="stylesheet" type="text/css" href="/css/pages-login-manage.css"/>
+	</head>
+  <body>
+	<div class="loginmanage">
+
+		<div class="py-container" >
+
+			<h4 class="manage-title">&nbsp;&nbsp;&nbsp;参天大树考试系统后台</h4>
+			<div class="loginform" align="left">
+				<ul class="sui-nav nav-tabs tab-wraped">
+					<li>
+						<a href="#index" data-toggle="tab">
+							<h3>扫描登录</h3>
+						</a>
+					</li>
+					<li class="active">
+						<a href="#profile" data-toggle="tab">
+							<h3>账户登录</h3>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content tab-wraped">
+					<div id="index" class="tab-pane">
+						<p>欢迎使用二维码登录！</p>
+						<img src="../img/erweima112.png" />
+					</div>
+					<div id="profile" class="tab-pane  active">
+						<form action="/user/login" method="post" class="sui-form">
+							<div class="input-prepend">
+								<span class="add-on loginname"></span>
+								<input name="username" type="text"
+								placeholder="邮箱/用户名/手机号" class="span2 input-xfat"/>
+							</div>
+							<div class="input-prepend">
+								<span class="add-on loginpwd"></span>
+								<input name="password" type="password"
+								placeholder="请输入密码" class="span2 input-xfat"/>
+							</div>
+							<div class="setting">
+								 <div id="slider">
+									<div id="slider_bg"></div>
+									<span id="label">>></span> 
+									<span id="labelTip">拖动滑块验证</span>
+								</div>
+							</div>
+							<div class="logined">
+								<input type="submit"
+									   class="sui-btn btn-block btn-xlarge btn-danger"
+								       value="登&nbsp;&nbsp;录"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+
+	<!--foot-->
+	<div class="py-container copyright">
+		<ul>
+			<li>关于我们</li>
+			<li>联系我们</li>
+			<li>联系客服</li>
+			<li>小Q帮你</li>
+			<li>BIOM</li>
+			<li>PMS</li>
+			<li>珠海四部社区</li>
+		</ul>
+		<div class="address">风里雨里，珠海四部，我们有你更精彩！不忘初心，牢记使命。团结奋进，珠海四部，我们砥砺前行！</div>
+		<div class="beian">粤ICP备xxxxxxx号 粤公网安备xxx
+		</div>
+	</div>
+
+
+	<script src="/js/plugins/jquery/jquery.min.js"></script>
+	<script src="/js/plugins/sui/sui.min.js"></script>
+	<script src="/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+	<script src="/js/pages/jquery.slideunlock.js"></script>
+	<script>
+		$(function(){
+			var slider = new SliderUnlock("#slider",{
+					successLabelTip : "欢迎访问参数大树考试系统"
+				},function(){
+					// alert("验证成功,即将跳转至首页");
+	            	// window.location.href="index.html"
+	        	});
+	        slider.init();
+		})
+	</script>
+</body>
+</html>

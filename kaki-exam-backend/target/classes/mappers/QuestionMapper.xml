@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icbc.mapper.QuestionMapper">
+	<insert id="insertPojo" parameterType="com.icbc.pojo.Question">
+		insert into `kaki_exam`.`t_exam_question` (
+		  `content`,
+		  `answer`,
+		  `score`,
+		  `type`,
+		  `option_map_string`,
+		  `reason`
+		)
+		values
+		  (
+			#{content},
+			#{answer},
+			#{score},
+			#{type},
+			#{optionMapString},
+			#{reason}
+		  ) ;
+	</insert>
+
+	<!--   条件分页查询商品表查询-->
+	<select id="findAll" parameterType="Dept" resultType="com.icbc.pojo.Question">
+		select
+		  `id`,
+		  `content`,
+		  `answer`,
+		  `score`,
+		  `type`,
+		   option_map_string,
+		   `reason`
+		from
+		  `kaki_exam`.`t_exam_question`
+		  <where>
+			  <if test="content != null and content != ''">
+				  and content like concat('%',#{content},'%')
+			  </if>
+			  <if test="answer != null and answer != ''">
+				  and answer = #{answer}
+			  </if>
+			  <if test="score != null and score != ''">
+				  and score = #{score}
+			  </if>
+			  <if test="type != null and type != ''">
+				  and `type` like concat('%',#{type},'%')
+			  </if>
+		  </where>
+		order by id
+	</select>
+
+</mapper>

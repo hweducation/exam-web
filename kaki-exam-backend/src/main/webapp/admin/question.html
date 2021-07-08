@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>题目录入</title>
+	<link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css"/>
+<!--	elementui-->
+	<link rel="stylesheet" href="../js/plugins/elementui/index.css">
+	<link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css"/>
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/axios.min.js"></script>
+	<script src="../js/pagination.js"></script>
+<!--	elementui-->
+	<script src="../js/plugins/elementui/index.js"></script>
+<!--	基本增删改查-->
+	<script src="../controller/questionController.js"></script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+	<div id="app">
+		<!-- .box-body -->
+		<div class="box-header with-border">
+			<h3 class="box-title">题目录入</h3>
+		</div>
+
+		<div class="box-body">
+			<!-- 数据表格 -->
+			<div class="table-box">
+				<!--工具栏-->
+				<div class="pull-left">
+					<div class="form-group form-inline">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" @click="entity={};optionMap={'A':'A.','B':'B.','C':'C.','D':'D.'}" title="新建" data-toggle="modal" data-target="#addModal" ><i class="fa fa-file-o"></i> 新建</button>
+							<button type="button" class="btn btn-default" title="删除" @click="del()" ><i class="fa fa-trash-o"></i> 删除</button>
+							<button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+						</div>
+					</div>
+				</div>
+				<div class="box-tools pull-right">
+					<div class="has-feedback">
+						<!--  查询条件区-->
+						<table>
+							<tr>
+								<td><input class="form-control" v-model="searchEntity.type" placeholder="题目类型">
+								</td>
+								<td><input class="form-control" v-model="searchEntity.content" placeholder="题目内容">
+								</td>
+								<td>
+									<button type="button" class="btn btn-default" @click="findPage(1)">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询
+									</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div><br/>
+				<!--工具栏/-->
+
+				<!--数据列表-->
+				<table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+					<thead>
+						<tr>
+							<th class="" style="padding-right:0px">
+								<input id="selall" type="checkbox"
+									   @click="checkAll($event)"
+									   :checked="checked"
+									   class="icheckbox_square-blue">
+							</th> 
+							<th class="sorting_asc">题目ID</th>
+							<th class="sorting_asc">题目类型</th>
+							<th class="sorting">题目内容</th>
+							<th class="sorting">选项</th>
+							<th class="sorting">原因</th>
+							<th class="sorting">答案</th>
+							<th class="sorting">分数</th>
+
+							<th class="text-center">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  v-for="entity in dataList">
+							<td><input  type="checkbox" :value="entity.id" v-model="ids"></td>
+							<td>{{entity.id}}</td>
+							<td>{{entity.type}}</td>
+							<td>{{entity.content}}</td>
+							<td>{{entity.optionMap}}</td>
+							<td>{{entity.reason}}</td>
+							<td>{{entity.answer}}</td>
+							<td>{{entity.score}}</td>
+							<td class="text-center">
+								<button type="button" class="btn bg-olive btn-xs" data-toggle="modal" @click="show(entity)" data-target="#editModal"  >修改</button>
+							</td>
+						</tr>
+					</tbody>
+				 </table>
+				<!--分页主件-->
+				<pagination :pages="pagetotal"
+							:current="curPage"
+							@navpage="findPage"/>
+				 <!--数据列表/-->                        
+			</div>
+			<!-- 数据表格 /-->
+		 </div>
+		 <!-- /.box-body -->
+
+		<!-- 新增窗口 -->
+		<div class="modal fade" id="addModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+			<div class="modal-dialog" >
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myaddModalLabel" >新增题目</h3>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered table-striped"  width="800px">
+							<tr>
+								<td>题目类型</td>
+								<td><input  class="form-control" placeholder="题目类型" v-model="entity.type" prop="type">  </td>
+							</tr>
+							<tr>
+								<td>题目内容</td>
+								<td>
+								<textarea  cols="30" maxlength="300" style="width: 100%; height: 180px;" v-model="entity.content" prop="content" rows="4" placeholder="  题目内容">
+
+								</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td>选项A</td>
+								<td><input class="form-control" placeholder="选项A" v-model="optionMap.A" prop="optionMap.A">  </td>
+							</tr>
+							<tr>
+								<td>选项B</td>
+								<td><input class="form-control" placeholder="选项B" v-model="optionMap.B" prop="optionMap.B">  </td>
+							</tr>
+							<tr>
+								<td>选项C</td>
+								<td><input class="form-control" placeholder="选项C" v-model="optionMap.C" prop="optionMap.C">  </td>
+							</tr>
+							<tr>
+								<td>选项D</td>
+								<td><input class="form-control" placeholder="选项D" v-model="optionMap.D" prop="optionMap.D">  </td>
+							</tr>
+
+							<tr>
+								<td>答案</td>
+								<td><input class="form-control" placeholder="答案" v-model="entity.answer" prop="answer">  </td>
+							</tr>
+							<tr>
+								<td>原因</td>
+								<td><input class="form-control" placeholder="原因" v-model="entity.reason" prop="reason">  </td>
+							</tr>
+							<tr>
+								<td>分数</td>
+								<td><input  class="form-control" placeholder="分数" v-model="entity.score" prop="score">  </td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-success" data-dismiss="modal" @click="seveOrUpdate()" aria-hidden="true">保存</button>
+						<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		   
+		<!-- 编辑窗口(修改窗口) -->
+		<div class="modal fade" id="editModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		  <div class="modal-dialog" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel" v-text="msg">{{msg}}</h3>
+				</div>
+				<div class="modal-body">		
+					<table class="table table-bordered table-striped"  width="800px">
+						<tr>
+							<td>题目类型</td>
+							<td><input  class="form-control" placeholder="题目类型" v-model="entity.type" prop="type">  </td>
+						</tr>		      	
+						<tr>
+							<td>题目内容</td>
+							<td>
+								<textarea  cols="30" maxlength="300" style="width: 100%; height: 180px;" v-model="entity.content" prop="content" rows="4" placeholder="  题目内容">
+
+								</textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>选项A</td>
+							<td><input class="form-control" placeholder="选项A" v-model="optionMap.A" prop="optionMap.A">  </td>
+						</tr>
+						<tr>
+							<td>选项B</td>
+							<td><input class="form-control" placeholder="选项B" v-model="optionMap.B" prop="optionMap.B">  </td>
+						</tr>
+						<tr>
+							<td>选项C</td>
+							<td><input class="form-control" placeholder="选项C" v-model="optionMap.C" prop="optionMap.C">  </td>
+						</tr>
+						<tr>
+							<td>选项D</td>
+							<td><input class="form-control" placeholder="选项D" v-model="optionMap.D" prop="optionMap.D">  </td>
+						</tr>
+
+						<tr>
+							<td>答案</td>
+							<td><input class="form-control" placeholder="答案" v-model="entity.answer" prop="answer">  </td>
+						</tr>
+						<tr>
+							<td>原因</td>
+							<td><input class="form-control" placeholder="原因" v-model="entity.reason" prop="reason">  </td>
+						</tr>
+						<tr>
+							<td>分数</td>
+							<td><input  class="form-control" placeholder="分数" v-model="entity.score" prop="score">  </td>
+						</tr>
+					 </table>				
+				</div>
+				<div class="modal-footer">						
+					<button class="btn btn-success" data-dismiss="modal" @click="seveOrUpdate()" aria-hidden="true">保存</button>
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

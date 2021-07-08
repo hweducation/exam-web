@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icbc.mapper.HistoryMapper">
+
+<!--   条件分页查询dept查询-->
+	<select id="findAll" parameterType="History" resultType="History">
+	    select
+		  `id`,
+		  `paper_id`,
+		  `paper_name`,
+		  `src_score`,
+		  `user_score`,
+		  `user_id`,
+		   DATE_FORMAT(create_date, '%Y-%m-%d %H:%i:%s') as createDateString
+		from
+		  `kaki_exam`.`t_exam_test_history`
+		where
+		   user_id = #{userId}
+		<if test="paperName != null and paperName != ''">
+			AND paper_name like concat('%',#{paperName},'%')
+		</if>
+		 order by create_date desc
+
+	</select>
+
+	<insert id="historyInsert" parameterType="History">
+		insert into `kaki_exam`.`t_exam_test_history` (
+		  `paper_id`,
+		   `paper_name`,
+		  `src_score`,
+		  `user_score`,
+		  `user_id`,
+		  `create_date`,
+		  `dept_flag`
+		)
+		values
+		  (
+			#{paperId} ,
+			#{paperName} ,
+			#{srcScore} ,
+			#{userScore} ,
+			#{userId} ,
+			NOW(),
+			#{deptFlag}
+		  ) ;
+	</insert>
+	<!--根据卷纸id查询，当前卷纸的得分排行-->
+	<select id="findByPaperId" resultType="com.icbc.pojo.History">
+	 select
+	   `user_id`,
+	   `paper_name`,
+	   `src_score`,
+	    DATE_FORMAT(create_date, '%Y-%m-%d %H:%i:%s') as createDateString,
+		MAX(user_score) as user_score
+
+     from
+       `kaki_exam`.`t_exam_test_history`  t
+
+     where
+        t.paper_id = #{paperId}
+     group by   user_id
+
+     order by user_score desc ,t.`create_date` asc
+	</select>
+
+</mapper>

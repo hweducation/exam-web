@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题回顾2</title>
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css"/>
+    <!--	elementui-->
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/style.css"/>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/pagination.js"></script>
+    <script src="/js/recorder.js"></script>
+    <script src="../controller/testController.js"></script>
+</head>
+<body>
+    <div>
+        <ol >
+            <h3> <li  :value=1><font style="font-family: 'STHupo'">上一题的条件2是什么？</font></li></h3>
+            <h3> <li  :value=2><font style="font-family: 'STHupo'">上一题的目标是什么？</font></li></h3>
+            <h3> <li  :value=3><font style="font-family: 'STHupo'">上一题的关联知识点是什么？</font></li></h3>
+            <!--<h3>{{entity.optionMap.A}}</h3>-->
+
+            <button type="button" id="btn1-start-recording" style="display: inline" onclick="begin()">begin</button>
+            <button type="button" id="btn1-stop-recording" style="display: inline" onclick="stop(this.id)">stop</button>
+
+            <audio controls="" style="visibility: hidden"></audio>
+
+            <script>
+                urlinfo = window.location.href;  //获取当前页面的url
+                console.log(urlinfo)
+                len = urlinfo.split("?");//获取url的长度
+                newsidinfo = len[1];//取出参数字符串 这里会获得类似“id=1”这样的字符串
+                console.log(newsidinfo)
+                newsids = newsidinfo.split("&");//对获得的参数字符串按照“=”进行分割
+                parameter1 = newsids[0];  //得到参数值 os：标识安卓还是ios，1=ios、2=安卓
+                index = parameter1.split("=")[1];
+            </script>
+
+            <script>
+
+                let recorder = new Recorder({
+                    sampleBits: 16,         // 采样位数，支持 8 或 16，默认是16
+                    sampleRate: 16000,      // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
+                    numChannels: 1,         // 声道，支持 1 或 2， 默认是1
+                    compiling: false       // 是否边录边转换，默认是false
+                });
+
+                // javascript function that uploads a blob to upload.php
+                function uploadBlob(blob, filename){
+                    // create a blob here for testing
+                    var fd = new FormData();
+                    fd.append('name', 'my_file');//'filename'
+                    fd.append('audio_file', blob);
+                    fd.set('filename', filename);
+
+                    alert('开始上传文件');
+                    /*
+                    // 异步上传文件
+                    axios({
+                        method : "post", // 请求方式
+                        url : 'http://localhost:9001/api/upload', // 请求url
+                        data : fd, // 请求参数(文件类型的请求参数)
+                        headers : {"Content-Type" : "multipart/form-data"} // 请求头
+
+                    }).then((response)=>{
+                        // 获取响应数据 {status : 200, url : ''}
+                        if (response.data.status == 200){
+                            // 上传成功，获取图片的url
+                            alert("上传成功！");
+
+                        }else{
+                            alert("上传失败！");
+                        }
+                    });*/
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:9001/api/upload',
+                        data: fd,
+                        processData: false,
+                        contentType: false
+                    }).done(function(data) {
+                        console.log(data);
+                    });
+
+                    /*
+                    //保存的请求
+                    axios.post("/examuser/"+url,this.entity).then((res)=>{
+                        if(res.data.flag){
+                            //父页面重新加载
+                            if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+                                parent.location.href="/logout";
+                                //parent.location.reload();//父页面重新加载
+                            }
+                        }else {
+                            this.$message.error("修改失败！");
+                        }
+                    })*/
+                }
+
+                function begin() {
+                    alert('开始录音');
+                    recorder.start().then(() => {
+                        // 开始录音
+                        console.log("recording...")
+                    }, (error) => {
+                        // 出错了
+                        console.log(`${error.name} : ${error.message}`);
+                    });
+                }
+
+                function stop(id) {
+                    alert('停止录音');
+                    //recorder.stop();
+                    recorder.stop();
+                    recorder.play();
+                    var blob = recorder.getWAVBlob();
+                    //alert(blob);
+                    var url = URL.createObjectURL(blob);
+                    //alert(url);
+                    alert(blob.size);
+                    var answernum_name=id+".wav";
+
+                    if(blob.size<3*1024*1024){
+                        uploadBlob(blob, answernum_name);
+                    }
+                    // 销毁录音实例，置为null释放资源，fn为回调函数，
+                    recorder.destroy().then(function() {
+                        recorder = null;
+                    });
+                    history.go(0);
+                }
+                function play(){
+                    recorder.play();
+                }
+            </script>
+        </ol>
+
+        <script>
+            var str = "下一页";
+            var isEnd = false;
+            if(index==questionList.size()){
+                str = "提交";
+                isEnd = true;
+            }
+
+        </script>
+        <div  style="text-align:center; width:100%;height:100%;margin:0px; ">
+            <el-row>
+                <el-button  type="success"  @click="gotoQuestion(index)" :disabled="isdisabled">str</el-button>
+            </el-row>
+        </div>
+    </div>
+</body>
+</html>

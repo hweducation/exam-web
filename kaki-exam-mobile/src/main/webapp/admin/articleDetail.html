@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <title>参天大树-学习资料</title>
+    <link rel="stylesheet" href="../css/articleDetail.css" />
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.css">
+
+</head>
+
+
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+    <div class="app" id="app">
+        <!-- 页面头部 -->
+        <div class="top-header">
+            <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+            <span class="center">{{entity.title}}</span>
+            <span class="f-right"><i class="icon-more"></i></span>
+        </div>
+        <!-- 页面内容 -->
+        <div class="contentBox">
+            <div class="list-content">
+
+                <div class="fix-info">
+                   <hr/> <i><font style="font-family:KaiTi; font-size: 28px" >{{entity.title}}</font></i><hr style="height:1px;border:none;border-top:1px dashed rgba(250,0,223,0.68);"/>
+                    <p v-html="entity.content"></p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 页面  js -->
+    <script src="../js/plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/plugins/elementui/index.js"></script>
+    <script src="../js/pagination.js"></script>
+    <script src="../js/getParameter.js"></script>
+    <script src="../controller/articleDetailController.js"></script>
+</body>

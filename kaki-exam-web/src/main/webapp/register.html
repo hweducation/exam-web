@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用户注册</title>
+		<link rel="icon" href="img/temp/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="css/webbase.css"/>
+		<link rel="stylesheet" href="/plugins/adminLTE/css/AdminLTE.css"/>
+		<link rel="stylesheet" href="/plugins/adminLTE/css/skins/_all-skins.min.css"/>
+		<link rel="stylesheet" href="/js/plugins/elementui/index.css">
+		<link rel="stylesheet" href="/js/plugins/font-awesome/css/font-awesome.min.css">
+
+		<link rel="stylesheet" type="text/css" href="css/pages-register.css"/>
+
+		<script src="/js/vue.min.js"></script>
+		<script src="/js/plugins/jquery/jquery.min.js"></script>
+		<script src="/js/axios.min.js"></script>
+
+
+		<script src="/js/plugins/elementui/index.js"></script>
+		<script src="/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+		<script src="/js/plugins/sui/sui.min.js"></script>
+		<script src="/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+
+
+		<script type="text/javascript">
+			window.onload = function () {
+			  	var vue = new Vue({
+					el : '#app', // 元素绑定
+					data : {
+						entity : {
+							deptFlag:''
+						} ,// 表单数据封装
+						deptList:[], //部门集合
+						checkbox1Value:false,
+						sexList:[],
+						sexFlag:1,
+						gradeList:[]
+					},
+					created(){
+						//获取部门列表
+						this.findDept();
+
+						this.sexList.push("男");
+						this.sexList.push("女");
+
+						this.gradeList.push("高一");
+						this.gradeList.push("高二");
+						this.gradeList.push("高三");
+						this.gradeList.push("其他");
+					},
+					methods : {
+					    // 用户注册
+                        saveOrUpdate : function () {
+							// if(!this.checkbox1Value){
+							// 	this.$message({
+							// 		type:"error",
+							// 		message:'请阅读并勾选服务条款！'
+							// 	});
+							// 	return;
+							// }
+							this.entity.deptFlag = 13;
+							console.log(this.entity.deptFlag);
+                        	if(this.entity.username && this.entity.password&& this.entity.real_name && this.entity.sex&&this.entity.grade){
+								// 发送异步请求
+								axios.post("/examuser/save", this.entity).then((response)=>{
+									// 获取响应数据
+									if (response.data.flag){
+
+										// 跳转到登录页面
+										location.href = "/login.html";
+									}else{
+										this.$message({
+											type:"error",
+											message:response.data.msg
+										});
+									}
+								});
+							}else {
+								this.$message({
+									type:"error",
+									message:'请填写完整信息！'
+								});
+							}
+
+
+                        },
+						findDept(){//部门下拉列表
+							axios.get("/dept/findAll").then((res)=>{
+								if (res.data){
+									this.deptList = res.data;
+								} else {
+									this.$message.error("部门列表查询失败！");
+								}
+							}).catch((e)=>{
+								this.$message({
+									type:"error",
+									message:"系统异常。。。"+e
+								});
+							});
+
+
+						},
+						checkbox1Click(e){
+                        	this.checkbox1Value = e.target.checked;
+						}
+                    }
+				});
+			};
+		</script>
+
+	</head>
+   <body>
+	 <div id="app" class="register py-container ">
+		<!--head-->
+		 <div class="py-container logoArea">
+			 <img src="img/temp/ctds.png" width="250" align="left" />
+		 </div>
+		<!--register-->
+		<div class="registerArea">
+			<h3>用户注册<span class="go">我有账号，去
+				<a href="login.html" target="_blank">登录</a></span></h3>
+			<div class="info">
+				<form class="sui-form form-horizontal">
+					<div class="control-group">
+						<label class="control-label">登录名（建议英文）：</label>
+						<div class="controls">
+							<input type="text" placeholder="登录名"
+								   v-model="entity.username"
+								   class="input-xfat input-xlarge">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">登录密码：</label>
+						<div class="controls">
+							<input type="password" placeholder="登录密码"
+								   v-model="entity.password"
+								   class="input-xfat input-xlarge">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">真实姓名：</label>
+						<div class="controls">
+							<input type="text" placeholder="真实姓名"
+								   v-model="entity.real_name"
+								   class="input-xfat input-xlarge">
+						</div>
+					</div>
+<!--					<div class="control-group">-->
+<!--						<label class="control-label">统一认证号：</label>-->
+<!--						<div class="controls">-->
+<!--							<input type="text" placeholder="统一认证号"-->
+<!--								   v-model="entity.icbcId"-->
+<!--								   class="input-xfat input-xlarge">-->
+<!--						</div>-->
+<!--					</div>-->
+
+<!--					<div class="control-group">-->
+<!--						<label class="control-label">部门：</label>-->
+<!--						<div class="controls">-->
+<!--							<select style="width: 270px;height: 38px;border: 1px solid rgba(0,0,0,0.47)" class="form-control" v-model="entity.deptFlag">-->
+<!--								<option value=''>========请选择========</option>-->
+<!--								<option :value="b.id" v-for="b in deptList">{{b.deptName}}</option>-->
+<!--							</select>-->
+<!--						</div>-->
+<!--					</div>-->
+
+					<div class="control-group">
+						<label class="control-label">性别：</label>
+						<div class="controls">
+							<select style="width: 270px;height: 38px;border: 1px solid rgba(0,0,0,0.47)" class="form-control" v-model="entity.sex">
+<!--								<option value=''>女</option>-->
+								<option :value="b" v-for="b in sexList">{{b}}</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">年级：</label>
+						<div class="controls">
+							<select style="width: 270px;height: 38px;border: 1px solid rgba(0,0,0,0.47)" class="form-control" v-model="entity.grade">
+								<!--								<option value=''>女</option>-->
+								<option :value="grade" v-for="grade in gradeList">{{grade}}</option>
+							</select>
+						</div>
+					</div>
+
+<!--					<div class="control-group">-->
+<!--						<label class="control-label">-->
+<!--							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
+<!--						<div class="controls">-->
+<!--							<input id="checkbox1" @click="checkbox1Click($event)" name="m1" type="checkbox">-->
+<!--							<span>同意并注册  <a href="sampling.html" target="_blank">《参天大树用户服务条款》</a></span>-->
+<!--						</div>-->
+<!--					</div>-->
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls btn-reg">
+							<a class="sui-btn btn-block btn-xlarge btn-danger"
+							   @click="saveOrUpdate()">注&nbsp;&nbsp;&nbsp;册</a>
+						</div>
+					</div>
+				</form>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!--foot-->
+		 <div class="py-container copyright">
+			 <ul>
+				 <li>关于我们</li>
+				 <li>联系我们</li>
+				 <li>联系客服</li>
+				 <li>小Q帮你</li>
+				 <li>BIOM</li>
+				 <li>PMS</li>
+				 <li>珠海四部社区</li>
+			 </ul>
+			 <div class="address">风里雨里，珠海四部，我们有你更精彩！不忘初心，牢记使命。团结奋进，珠海四部，我们砥砺前行！</div>
+			 <div class="beian">粤ICP备xxxxxxx号 粤公网安备xxx
+		</div>
+		 </div>
+	 </div>
+	</body>
+</html>

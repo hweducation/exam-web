@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <title>考试详情</title>
+    <link rel="stylesheet" href="../css/test_mobile.css"/>
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+
+
+    <script src="../plugins/vue/vue.js"></script>
+    <script src="../plugins/vue/axios-0.18.0.js"></script>
+    <script src="../plugins/healthmobile.js"></script>
+    <script src="../js/plugins/elementui/index.js"></script>
+    <script src="../controller/test_mobileController.js"></script>
+    <script src="../js/getParameter.js"></script>
+
+
+</head>
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<div id="app" class="app">
+    <!-- 页面头部 -->
+    <div class="top-header">
+        <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+        <span class="center">参天大树</span>
+        <span class="f-right"><i class="icon-more"></i></span>
+    </div>
+    <!-- 页面内容 -->
+    <div class="contentBox">
+        <div class="card">
+            <header>
+                <div><h3 align="center"><strong>{{this.paperEntity.name}}</strong></h3></div>
+
+
+                <div><h4 align="left" style="color: #0f321e">&nbsp;&nbsp;满分：{{this.maxScore}} &nbsp; &nbsp; &nbsp;  &nbsp; 您的得分：<font style="color: red; size: 100px">{{userScore}}</font><span id="remainDays"></span> </h4></div>
+<!--                <hr style="background-color:#26ACFF;height: 5px;"/>-->
+            </header>
+        </div>
+
+
+        <div class="table-listbox">
+            <div class="box-title">
+                <i class="icon-zhen"><span class="path1"></span><span class="path2"></span></i>
+                <span>开始答题</span>
+
+                <div class="box-body">
+                    <div v-for="(entity,index) in questionList">
+
+                        <ol >
+                            <h3> <li  :value="index+1"><font style="font-family: 'STHupo'">{{entity.content}}<span ><img :id="entity.id"  style="width: 20px"></span></font></li></h3><br/>
+                            <!--<h3>{{entity.optionMap.A}}</h3>-->
+                            <input type="radio" :name="entity.id" value="A" @click="userAnswerListSave(entity.id,'A')"><label><strong>{{entity.optionMap.A}}</strong></label><br/><br/>
+                            <input type="radio" :name="entity.id" value="B" @click="userAnswerListSave(entity.id,'B')"><label><strong>{{entity.optionMap.B}}</strong></label><br/><br/>
+                            <input type="radio" :name="entity.id" value="C" @click="userAnswerListSave(entity.id,'C')"><label><strong>{{entity.optionMap.C}}</strong></label><br/><br/>
+                            <input type="radio" :name="entity.id" value="D" @click="userAnswerListSave(entity.id,'D')"><label><strong>{{entity.optionMap.D}}</strong></label><br/><br/>
+                            <div :id="index" style="display: none">
+                                <h5><strong>答案：</strong>
+                                    <font style="font-family: Meiryo;color: red;size: A4 " >{{entity.answer}}</font></h5>
+                                <h5><strong>原因：</strong>
+                                    <font style="font-family: Meiryo;color: #000838;size: A4 " >{{entity.reason}}</font></h5>
+                            </div>
+
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-table" >
+                <div class="box-button-kaki" id="mybuttondiv">
+                    <button id="mybutton" @click="answerSubmit(questionList)" :disabled="isdisabled" style="background-image: linear-gradient(90deg, #26acff, #0088dc)"  class="order-btn">提交成绩</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

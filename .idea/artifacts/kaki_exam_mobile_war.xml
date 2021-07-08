@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="kaki-exam-mobile:war">
+    <output-path>$PROJECT_DIR$/kaki-exam-mobile/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>kaki-exam-mobile</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="kaki-exam-mobile-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="kaki-exam-mobile:war exploded" />
+    </root>
+  </artifact>
+</component>

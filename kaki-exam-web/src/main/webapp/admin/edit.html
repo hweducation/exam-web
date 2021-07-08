@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>完善资料</title>
+	<link rel="icon" href="/img/temp/favicon.ico"/>
+
+    <link rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/plugins/adminLTE/css/AdminLTE.css"/>
+	<link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/plugins/adminLTE/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+	<!--	elementui-->
+	<link rel="stylesheet" href="../js/plugins/elementui/index.css">
+	<link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+	<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="/js/vue.min.js"></script>
+	<script src="/js/axios.min.js"></script>
+	<script src="../js/plugins/elementui/index.js"></script>
+	<script src="../controller/editController.js"></script>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini">
+	<div id="app">
+		<!-- 正文区域 -->
+		<section class="content">
+			<div class="box-body">
+				<!--tab页-->
+				<div class="nav-tabs-custom">
+					<!--tab头-->
+					<ul class="nav nav-tabs">
+						
+						<li class="active">
+							<a href="#home" data-toggle="tab">编辑资料</a>
+						</li>                            
+					</ul>
+					<!--tab头/-->
+					
+					<!--tab内容-->
+					<div class="tab-content">
+
+						<!--表单内容-->
+						<div class="tab-pane active" id="home">
+							<div class="row data-type">
+
+								<div class="col-md-2 title">用户名</div>
+								<div class="col-md-10 data">
+									<input type="text" class="form-control" disabled="true"  placeholder="用户名" v-model="entity.username">
+								</div>
+								
+								<div class="col-md-2 title">昵称</div>
+								<div class="col-md-10 data">
+									<input type="text" class="form-control"  placeholder="昵称" v-model="entity.nickName">
+								</div>
+
+								<div class="col-md-2 title">统一认证号</div>
+								<div class="col-md-10 data">
+									<input type="text" class="form-control"  placeholder="统一认证号" v-model="entity.icbcId">
+								</div>
+
+								<div class="col-md-2 title">邮箱</div>
+								<div class="col-md-10 data">
+									<input type="text" class="form-control"  placeholder="邮箱" v-model="entity.email">
+								</div>
+
+								<div class="col-md-2 title">部门</div>
+								<div class="col-md-10 data">
+									<select style="width: 270px;height: 38px;border: 1px solid rgba(0,0,0,0.47)" class="form-control" v-model="entity.deptFlag">
+										<option value=''>========请选择========</option>
+										<option :value="b.id" v-for="b in deptList">{{b.deptName}}</option>
+									</select>
+								</div>
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+			   </div>
+			  <div  style="text-align:center; width:100%;height:100%;margin:0px; ">
+				   <button  class="btn btn-default" >取消</button>
+				   <button class="btn btn-primary" @click="seveOrUpdate()">保存</button>
+			  </div>
+		</section>
+	</div>
+</body>
+
+</html>

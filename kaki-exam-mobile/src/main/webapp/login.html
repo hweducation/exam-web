@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+
+    <title>参天大树-移动端登录</title>
+    <link rel="icon" href="img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="plugins/elementui/index.css"/>
+    <link rel="stylesheet" href="js/plugins/font-awesome/css/font-awesome.css">
+</head>
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<div class="app" id="app">
+    <!-- 页面头部 -->
+    <div class="top-header">
+        <span class="f-left"><i class="icon-back"></i></span>
+        <span class="center">参天大树</span>
+        <span class="f-right"><i class="icon-more"></i></span>
+    </div>
+
+    <!-- 页面内容 -->
+    <div class="contentBox">
+        <div class="login">
+             <img src="img/temp/ctds.png" width="200">
+
+            <form id="login-form" action="/web/loginweb" method="post" class="sui-form">
+
+                <div class="input-row">
+                    <label>账号</label>
+                    <div class="loginInput">
+                        <input id='account' style="width:80%" name="username" type="text" placeholder="邮箱/用户名/手机号">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <label>密码</label>
+                    <div class="loginInput">
+                        <input style="width:80%" id='password' name="password" type="password"
+                               placeholder="请输入密码">
+                    </div>
+                </div>
+
+                <div class="input-row" style="font-size: 12px">
+                    <input type="checkbox" checked>阅读并同意<a>《参天大树用户服务条款》</a>
+                </div>
+
+<!--                <div class="btn yes-btn"><a @click="login()" href="#">登&nbsp;&nbsp;&nbsp;录</a></div>-->
+
+<!--                <input class="btn yes-btn" id="submitbutton" type="submit"   value="登   录">-->
+                <button class="login-button" type="submit">登&nbsp;&nbsp;&nbsp;录</button>
+
+            </form>
+
+
+            <div class="otherlogin">
+                <div class="types">
+                    <ul>
+                        <li><img src="/img/qq.png" width="35px" height="35px" /></li>
+                        <li><img src="/img/sina.png" /></li>
+                        <li><img src="/img/ali.png" /></li>
+                        <li><img src="/img/weixin.png" /></li>
+                    </ul>
+                </div>
+<!--                <span class="register">-->
+<!--										<a href="register.html" target="_blank">立即注册</a>-->
+<!--									</span>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="plugins/jquery/dist/jquery.min.js"></script>
+<script src="plugins/healthmobile.js"></script>
+<script src="plugins/vue/vue.js"></script>
+<script src="plugins/vue/axios-0.18.0.js"></script>
+<script src="plugins/elementui/index.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#app',
+
+        data: {
+            loginInfo: {},//登录信息
+            username:'',
+            password:''
+        },
+        methods: {
+            //登录
+            login() {
+                alert("xxxxx");
+                axios.post("/web/loginweb?username=" + this.username+"&password="+this.password).then((res) => {
+                    if (!res.data.flag) {
+                        this.$message.error(res.data.message);
+                        return false;
+                    }
+                });
+            }
+        },
+
+    });
+</script>
+</html>

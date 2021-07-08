@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>参天大树</title>
+    <!-- 页面meta -->
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <link rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/plugins/adminLTE/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="/plugins/adminLTE/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+
+    <!--	elementui-->
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.min.css">
+
+
+    <script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/plugins/adminLTE/js/app.min.js"></script>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/controller/indexController.js"></script>
+    <script src="../js/plugins/elementui/index.js"></script>
+    <script type="text/javascript">
+    	function setIFrameHeight(){
+		 	$("#iframe").height($(".content-wrapper").height() - 5);
+		 }
+	</script>
+
+</head>
+<body class="hold-transition skin-yellow-light sidebar-mini">
+    <div id="app" class="wrapper">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <span class="logo-lg">参天大树考试系统</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+<!--                        切换系统-->
+                        <li class="dropdown messages-menu">
+                            <a href="/admin/index2.html" >
+                                切换优化版
+                            </a>
+                        </li>
+
+
+
+                        <li class="dropdown messages-menu">
+
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">4</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">你有4个邮件</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- start message -->
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img :src="avatar" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4>系统消息
+                                                    <small><i class="fa fa-clock-o"></i> 5 分钟前</small>
+                                                </h4>
+                                                <p>欢迎登录系统?</p>
+                                            </a>
+                                        </li>
+                                        <!-- end message -->
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img :src="avatar" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4> 团队消息
+                                                    <small><i class="fa fa-clock-o"></i> 2 小时前</small>
+                                                </h4>
+                                                <p>你有新的任务了</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img :src="avatar" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4>
+                                                    Developers
+                                                    <small><i class="fa fa-clock-o"></i> Today</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img :src="avatar" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4>
+                                                    Sales Department
+                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img :src="avatar" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4>
+                                                    Reviewers
+                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">See All Messages</a></li>
+                            </ul>
+                        </li>
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">你有10个新消息</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-red"></i> 5 new members joined
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-red"></i> You changed your username
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                        <!-- Tasks: style can be found in dropdown.less -->
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">9</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">你有9个新任务</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Design some buttons
+                                                    <small class="pull-right">20%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">20% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Create a nice theme
+                                                    <small class="pull-right">40%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">40% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Some task I need to do
+                                                    <small class="pull-right">60%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">60% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Make beautiful transitions
+                                                    <small class="pull-right">80%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">80% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all tasks</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img :src="avatar" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{{loginName}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img :src="avatar" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        {{loginName}}
+                                        <small>最后登录 11:20AM</small>
+                                    </p>
+                                </li>
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a data-toggle="modal" data-target="#editModal" class="btn btn-default btn-flat">头像上传</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="/logout" class="btn btn-default btn-flat">注销</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- 页面头部 /-->
+
+        <!-- 导航侧栏 -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img :src="avatar" data-toggle="modal" data-target="#editModal" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p> {{loginName}}</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                    </div>
+                </div>
+                <ul class="sidebar-menu"  >
+                    <li class="header">菜单</li>
+                    <li id="admin-index"><a href="index.html"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+
+				    <!-- 菜单 -->
+					<li class="treeview">
+				        <a href="#">
+				            <i class="fa fa-folder"></i>
+				            <span>我的考试</span>
+				            <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+				        </a>
+				        <ul class="treeview-menu">
+
+				            <li id="admin-paper">
+				                <a href="paper.html" target="iframe">
+				                    <i class="fa fa-circle-o"></i> 我的试卷
+				                </a>
+				            </li>
+
+                            <li id="admin-history">
+                                <a href="history.html" target="iframe">
+                                    <i class="fa fa-circle-o"></i> 我的历史考试
+                                </a>
+                            </li>
+				        </ul>
+				    </li>
+
+                    <!-- 菜单 /-->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cog"></i>
+                            <span>娱乐</span>
+                            <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li id="admin-game">
+                                <a href="hikoki.html" target="iframe">
+                                    <i class="fa fa-circle-o"></i> 超级霸气的雷电
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+				    <!-- 菜单 /-->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cog"></i>
+                            <span>设置</span>
+                            <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li id="admin-data">
+                                <a href="edit.html" target="iframe">
+                                    <i class="fa fa-circle-o"></i> 编辑资料
+                                </a>
+                            </li>
+                            <li id="admin-password">
+                                <a href="password.html" target="iframe">
+                                    <i class="fa fa-circle-o"></i> 修改密码
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- 导航侧栏 /-->
+
+        <!-- 内容区域 -->
+        <div class="content-wrapper">
+			<iframe width="100%" id="iframe" name="iframe"	onload="setIFrameHeight()"
+					frameborder="0" src="home.html"></iframe>
+        </div>
+        <!-- 内容区域 /-->
+
+        <!-- 底部导航 -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> kaki_exam 2.0
+            </div>
+            <strong>Copyright &copy; 2020-2021 <a href="http://www.baidu.cn">xxxx</a>.</strong> All rights reserved.
+        </footer>
+
+        <!-- 头像上传窗口-->
+        <div class="modal fade" id="editModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-lg" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">头像上传</h3>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped">
+
+                            <tr>
+                                <td>头像</td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><input type="file" id="file"/>
+                                                <button class="btn btn-primary"
+                                                        @click="uploadAvatar()"
+                                                        type="button">上传</button></td>
+                                            <td><img :src="avatar" width="200px" height="200px"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button class="btn btn-success" data-dismiss="modal" @click="seveOrUpdate()" aria-hidden="true">保存</button>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>

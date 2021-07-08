@@ -1,0 +1,11 @@
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:30 +0800] "GET /admin/test.html?&paperEntity=%7B%22deptFlag%22:%2213%22,%22deptName%22:%22%E5%BC%80%E5%8F%91%E5%9B%9B%E9%83%A8%22,%22id%22:9,%22name%22:%22%E7%94%9F%E7%89%A9%E9%AB%98%E8%80%83%E5%8E%9F%E9%A2%98%E5%BA%93%22,%22score%22:100,%22status%22:%220%22,%22time%22:10%7D HTTP/1.1" 302 - http-bio-9001-exec-5 2
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:30 +0800] "GET /login.html HTTP/1.1" 200 6696 http-bio-9001-exec-5 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:30 +0800] "GET /img/icons.png HTTP/1.1" 404 977 http-bio-9001-exec-5 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:33 +0800] "POST /web/loginweb HTTP/1.1" 302 - http-bio-9001-exec-5 9
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:33 +0800] "GET /admin/paper.html HTTP/1.1" 304 - http-bio-9001-exec-5 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:34 +0800] "GET /webpaper/findByPage?curPage=1&deptFlag= HTTP/1.1" 200 252 http-bio-9001-exec-5 8
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:40 +0800] "GET /admin/test.html?&paperEntity=%7B%22deptFlag%22:%2213%22,%22deptName%22:%22%E5%BC%80%E5%8F%91%E5%9B%9B%E9%83%A8%22,%22id%22:9,%22name%22:%22%E7%94%9F%E7%89%A9%E9%AB%98%E8%80%83%E5%8E%9F%E9%A2%98%E5%BA%93%22,%22score%22:100,%22status%22:%220%22,%22time%22:10%7D HTTP/1.1" 200 13048 http-bio-9001-exec-5 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:40 +0800] "GET /controller/testController.js HTTP/1.1" 304 - http-bio-9001-exec-5 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:40 +0800] "GET /js/recorder.js HTTP/1.1" 304 - http-bio-9001-exec-10 1
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:27:40 +0800] "GET /webpaper/findByPaperId?paperId=9 HTTP/1.1" 200 7490 http-bio-9001-exec-10 8
+0:0:0:0:0:0:0:1 - - [29/Jun/2021:10:29:30 +0800] "POST /webqanswer/save HTTP/1.1" 200 4 http-bio-9001-exec-6 13

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icbc.mapper.PaperQuestionMapper">
+
+<!--   条件分页查询商品表查询-->
+	<select id="findAll" parameterType="Paper" resultType="com.icbc.pojo.Paper">
+		select
+			t1.`id`,
+			t1.`name`,
+			t1.`status`,
+			t1.`score`,
+			t2.`dept_name`as deptName,
+		    t1.`dept_flag` as deptFlag,
+			t1.`time`
+		from
+		   `t_exam_paper` t1,`t_exam_dept` t2
+		where
+		    t1.`dept_flag` = t2.`id`
+		    <if test="name != null and name != ''">
+				AND t1.`name`like concat('%',#{name},'%')
+			</if>
+
+			<if test="deptFlag != null and deptFlag != ''">
+				AND t1.`dept_flag`= #{deptFlag}
+			</if>
+		order by
+		    t1.`id`
+	</select>
+
+	<insert id="insertMap" parameterType="map">
+		insert into `t_exam_paper_question`(`pid`, `qid`) values
+		<foreach collection="questionidList" item="item" index="index" separator=",">
+			(#{paperId},#{item})
+		</foreach>
+	</insert>
+
+
+	<select id="findByPaperId" resultType="java.lang.Integer">
+		select qid from `t_exam_paper_question` where pid= #{value}
+	</select>
+
+	<!--根据卷纸id删除所有题目-->
+	<delete id="deleteByPaperId">
+		delete
+			from
+			  `kaki_exam`.`t_exam_paper_question`
+			where `pid` = #{value}
+	</delete>
+
+
+</mapper>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <title>历史考试</title>
+
+    <link rel="stylesheet" href="../css/history.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../js/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../js/plugins/font-awesome/css/font-awesome.css">
+
+</head>
+
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+
+<div class="app" id="app">
+
+    <!-- 页面头部 -->
+    <div class="top-header">
+        <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+        <span class="center">历史考试</span>
+        <span class="f-right"><i class="icon-more"></i></span>
+    </div>
+
+    <!-- 页面内容 -->
+    <div class="contentBox">
+        <div class="list-column1">
+            <ul class="list">
+                <li class="list-item" v-for="entity in dataList">
+<!--                    <a class="link-page" @click="gotoTest(entity)">-->
+                        <div class="item-body">
+                            <h4 class="ellipsis item-title">{{entity.paperName}}	<button type="button" class="kakibutton" data-toggle="modal" @click="show(entity)" data-target="#editModal"  >查看排名</button>
+                            </h4>
+                            <p class="ellipsis-more item-desc">满分：{{entity.srcScore}}</p>
+                            <p class="ellipsis-more item-desc">我的得分：{{entity.userScore}}分钟</p>
+                            <p class="ellipsis-more item-desc">考试时间：{{entity.createDateString}}</p>
+                            <p class="item-keywords">
+                                <span>计算机专业</span>
+                                <span>Java语言</span>
+                            </p>
+                        </div>
+<!--                    </a>-->
+                </li>
+            </ul>
+        </div>
+
+        <!--分页主件-->
+        <pagination :pages="pagetotal"
+                    :current="curPage"
+                    @navpage="findPage"/>
+
+    </div>
+
+    <!-- 排名查看窗口 -->
+    <div class="modal fade" id="editModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">排行榜（该榜只记录您的最高得分）</h3>
+                </div>
+                <div class="modal-body">
+                    <table id="dataLisat" class="table table-bordered table-striped table-hover dataTable">
+                        <thead>
+                        <tr>
+
+                            <th class="sorting">排名</th>
+                            <th class="sorting">用户名</th>
+                            <th class="sorting">试卷名称</th>
+                            <th class="sorting">满分数</th>
+                            <th class="sorting">得分</th>
+                            <th class="sorting">考试时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  v-for="(entity,index) in historydataList">
+
+                            <td>第{{index+1}}名</td>
+                            <td>{{entity.userId}}</td>
+                            <td>{{entity.paperName}}</td>
+                            <td>{{entity.srcScore}}</td>
+                            <td>{{entity.userScore}}</td>
+                            <td>{{entity.createDateString}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--分页主件-->
+                    <pagination :pages="historypagetotal"
+                                :current="historycurPage"
+                                @navpage="findHistoryPage"/>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">确定</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js -->
+<script src="../js/plugins/jquery/jquery.min.js"></script>
+<script src="../js/plugins/elementui/index.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src="../js/pagination.js"></script>
+
+<script src="../js/getParameter.js"></script>
+<script src="../controller/historyController.js"></script>
+</body>

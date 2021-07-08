@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="/img/temp/favicon.ico"/>
+    <title>我的考试</title>
+    <link rel="stylesheet" href="../css/mytest.css"/>
+
+
+</head>
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<div class="app" id="app">
+    <!-- 页面头部 -->
+    <div class="top-header">
+        <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+        <span class="center">我的考试</span>
+        <span class="f-right"><i class="icon-more"></i></span>
+    </div>
+    <!-- 页面内容 -->
+    <div class="contentBox">
+        <div class="list-column1">
+            <ul class="list">
+                <li class="list-item" v-for="entity in dataList">
+<!--                    "'test_mobile.html?paperEntity='+entity"-->
+                    <a class="link-page" @click="gotoTest(entity)">
+<!--                        <img class="img-object f-left" src="" alt="">-->
+                        <div class="item-body">
+                            <h4 class="ellipsis item-title">{{entity.name}}</h4>
+                            <p class="ellipsis-more item-desc">分数：{{entity.score}}</p>
+                            <p class="ellipsis-more item-desc">答题时间：{{entity.time}}分钟</p>
+                            <p class="ellipsis-more item-desc">部门：{{entity.deptName}}</p>
+                            <p class="item-keywords">
+                                <span>计算机专业</span>
+                                <span>Java语言</span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 页面 css js -->
+<script src="../plugins/vue/vue.js"></script>
+<script src="../plugins/vue/axios-0.18.0.js"></script>
+<script src="../controller/myPaperController.js"></script>
+<script src="../js/getParameter.js"></script>
+</body>
